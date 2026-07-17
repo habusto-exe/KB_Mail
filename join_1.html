@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KidBits — Turn your kid into the hero of their own game</title>
+<meta name="description" content="A real, playable keepsake starring your child. Join the list to be first in line at launch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#04030A; --bg2:#0B0A18; --panel:#151332; --panel2:#0d0c1f; --line:#37345e;
+    --gold:#FFD24A; --gold-soft:#FFE9A8; --ink:#EAEAFF; --slate:#A6A6CE;
+    --fire:#FF6A3D; --nature:#5AD06A; --water:#5AB8FF; --sky:#8AC4FF; --arcane:#8D82F0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;scroll-behavior:smooth;}
+  body{font-family:'VT323',monospace;background:var(--bg);color:var(--ink);overflow-x:hidden;
+    font-size:20px;line-height:1.5;-webkit-font-smoothing:none;}
+  img,svg{image-rendering:pixelated;}
+  .disp{font-family:'Press Start 2P',monospace;line-height:1.55;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+  .world{position:relative;background:
+    radial-gradient(ellipse 50% 40% at 12% 2%, rgba(141,130,240,.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 1%, rgba(255,210,74,.10), transparent 55%),
+    linear-gradient(180deg,#04030A 0%, #070614 40%, #0B0A18 100%);}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;}}
+
+  /* pixel stars */
+  .stars{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+  .star{position:absolute;background:#fff;width:2px;height:2px;opacity:.5;}
+  .star.tw{animation:tw 3.5s steps(2) infinite;}
+  @keyframes tw{0%,100%{opacity:.15;}50%{opacity:.7;}}
+
+  /* ---- pixel button ---- */
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:12px;
+    color:#1a1204;background:var(--gold);padding:15px 22px;min-height:50px;border:0;cursor:pointer;
+    box-shadow:4px 4px 0 #7a5a10, inset 2px 2px 0 var(--gold-soft);transition:transform .08s steps(1),box-shadow .08s steps(1);}
+  .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #7a5a10, inset 2px 2px 0 var(--gold-soft);}
+  .btn:active{transform:translate(4px,4px);box-shadow:0 0 0 #7a5a10;}
+  .btn:focus-visible{outline:3px solid var(--gold-soft);outline-offset:3px;}
+  .btn.fire{background:var(--fire);color:#210a02;box-shadow:4px 4px 0 #7a2810, inset 2px 2px 0 #ffb08c;}
+  .btn.fire:hover{box-shadow:2px 2px 0 #7a2810, inset 2px 2px 0 #ffb08c;}
+  .btn svg{width:16px;height:16px;}
+
+  /* ---- nav (splash: no outbound links) ---- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(4,3,10,.9);border-bottom:2px solid var(--line);backdrop-filter:blur(4px);}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:15px;color:var(--gold-soft);}
+  .brand .k{width:26px;height:26px;color:var(--gold);}
+  .nav-flag{font-family:'Press Start 2P',monospace;font-size:9px;color:#210a02;background:var(--nature);
+    padding:9px 12px;box-shadow:3px 3px 0 #1c6a2a;white-space:nowrap;}
+
+  /* ---- hero ---- */
+  .hero{position:relative;z-index:2;}
+  .hero-grid{padding:52px 0 18px;text-align:center;}
+  .hero-grid > div{max-width:720px;margin:0 auto;}
+  @media(max-width:900px){.hero-grid{padding:30px 0 10px;}}
+  .eyebrow{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--gold);letter-spacing:.06em;margin:0 0 20px;}
+  h1{font-family:'Press Start 2P',monospace;font-size:clamp(1.25rem,3.3vw,2.05rem);line-height:1.55;margin:0 0 22px;color:#fff;
+    text-shadow:3px 3px 0 #000, 0 0 18px rgba(255,210,74,.15);}
+  h1 .g{color:var(--gold);}
+  .lead{font-size:clamp(1.15rem,1.7vw,1.4rem);color:var(--slate);line-height:1.45;max-width:48ch;margin:0 auto 28px;}
+  .hero-cta-row{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;}
+  .hero-note{font-size:18px;color:var(--slate);}
+  .hero-note b{color:var(--nature);}
+
+  /* value props as bullets (under the headline) */
+  .vp-list{list-style:none;margin:28px auto 0;padding:0;max-width:780px;
+    display:grid;grid-template-columns:1fr 1fr;gap:17px 30px;text-align:left;}
+  @media(max-width:720px){.vp-list{grid-template-columns:1fr;max-width:500px;}}
+  .vp-list li{display:flex;gap:12px;align-items:flex-start;font-size:21px;color:var(--slate);line-height:1.4;}
+  .vp-list li b{color:var(--ink);font-size:23px;}
+  .vp-ic{flex:0 0 26px;width:26px;height:26px;margin-top:2px;color:var(--gold);}
+  .vp-ic svg{width:100%;height:100%;}
+  .vp-ic.f{color:var(--fire);} .vp-ic.n{color:var(--nature);} .vp-ic.a{color:var(--arcane);}
+  .vp-ic.w{color:var(--water);} .vp-ic.g{color:var(--gold);}
+
+  /* ---- section chrome ---- */
+  section.blk{position:relative;z-index:2;padding:clamp(3.2rem,7vw,5rem) 0;}
+  .kicker{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--gold);text-align:center;margin:0 0 16px;letter-spacing:.05em;}
+  h2{font-family:'Press Start 2P',monospace;font-size:clamp(1.05rem,2.6vw,1.55rem);line-height:1.5;text-align:center;margin:0 0 16px;color:#fff;text-shadow:2px 2px 0 #000;}
+  .sub{text-align:center;color:var(--slate);font-size:clamp(1.2rem,1.7vw,1.42rem);line-height:1.45;max-width:56ch;margin:0 auto clamp(2rem,5vw,2.6rem);}
+
+  /* value props bento */
+  .bento{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:16px;}
+  @media(max-width:900px){.bento{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.bento{grid-template-columns:1fr;}}
+  .tile{border:2px solid var(--line);background:linear-gradient(165deg,var(--panel),var(--panel2));padding:24px;position:relative;}
+  .tile.big{grid-column:span 1;grid-row:span 2;}
+  @media(max-width:900px){.tile.big{grid-column:span 2;grid-row:auto;}}
+  @media(max-width:560px){.tile.big{grid-column:auto;}}
+  .tile .ic{width:36px;height:36px;margin-bottom:14px;color:var(--gold);}
+  .tile.n .ic{color:var(--nature);} .tile.a .ic{color:var(--arcane);}
+  .tile.f .ic{color:var(--fire);} .tile.w .ic{color:var(--water);}
+  .tile h3{font-family:'Press Start 2P',monospace;font-size:12px;line-height:1.5;margin:0 0 12px;color:#fff;}
+  .tile p{color:var(--slate);font-size:19px;line-height:1.4;margin:0;}
+  .tile .mini{margin-top:18px;border:2px solid var(--line);background:#04030A;padding:12px;display:flex;gap:14px;align-items:center;}
+  .tile .mini .pf{width:56px;height:56px;flex:0 0 56px;border:2px solid var(--line);background:linear-gradient(180deg,#0a1030,#0c1a3a);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;}
+  .tile .mini .pf svg{width:74%;}
+
+  /* ---- JOIN / mailing list ---- */
+  .join-band{border:3px solid var(--gold);background:
+    radial-gradient(ellipse 60% 90% at 85% 12%, rgba(255,210,74,.10), transparent 60%),
+    linear-gradient(165deg,var(--panel),var(--panel2));
+    box-shadow:0 0 0 3px #04030A,0 0 0 6px #221f3e,0 18px 40px -14px #000;
+    padding:clamp(1.8rem,4.5vw,2.8rem);text-align:center;}
+  .join-band .prism{width:44px;height:44px;margin:0 auto 14px;color:var(--arcane);animation:spin 6s steps(8) infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .form{max-width:520px;margin:22px auto 0;text-align:left;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--gold);margin:0 0 9px;letter-spacing:.04em;}
+  .field input[type=text],.field input[type=email]{width:100%;font-family:'VT323',monospace;font-size:21px;color:var(--ink);
+    background:#04030A;border:2px solid var(--line);padding:12px 14px;min-height:50px;}
+  .field input::placeholder{color:#5c5b82;}
+  .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,210,74,.35);}
+  .segs{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:460px){.segs{grid-template-columns:1fr;}}
+  .seg{position:relative;}
+  .seg input{position:absolute;opacity:0;width:0;height:0;}
+  .seg span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:48px;padding:8px 10px;
+    font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.5;color:var(--slate);
+    border:2px solid var(--line);background:#04030A;cursor:pointer;transition:none;}
+  .seg input:checked + span{color:#04030A;background:var(--gold);box-shadow:3px 3px 0 #7a5a10;}
+  .seg input:focus-visible + span{outline:3px solid var(--gold-soft);outline-offset:2px;}
+  .join-submit{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:22px;}
+  .join-fine{font-size:19px;color:var(--slate);}
+  .join-fine b{color:var(--nature);}
+  .form-error{display:none;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--fire);line-height:1.6;margin-top:4px;}
+  .form-error.show{display:block;}
+
+  /* success state */
+  .join-done{display:none;text-align:center;}
+  .join-done.show{display:block;}
+  .join-done .tick{width:56px;height:56px;margin:0 auto 16px;color:var(--nature);}
+  .join-done h3{font-family:'Press Start 2P',monospace;font-size:14px;color:#fff;margin:0 0 12px;text-shadow:2px 2px 0 #000;}
+  .join-done p{color:var(--slate);font-size:20px;line-height:1.45;max-width:44ch;margin:0 auto;}
+
+  /* ---- TRAILER ---- */
+  .trailer-stage{position:relative;overflow:hidden;border:2px solid var(--line);
+    background:#020209;padding:clamp(1.4rem,4vw,2.6rem) 0;display:flex;justify-content:center;}
+  .trailer-amb{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+  .trailer-amb video{position:absolute;top:50%;left:50%;min-width:130%;min-height:130%;
+    transform:translate(-50%,-50%);filter:blur(38px) brightness(.5) saturate(1.2);opacity:.55;}
+  .trailer-amb::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%, transparent 35%, rgba(4,3,10,.75) 100%);}
+  .trailer-frame{position:relative;z-index:2;border:3px solid var(--gold);background:#000;padding:3px;
+    box-shadow:0 0 0 3px #04030A,0 0 0 6px #221f3e,0 20px 44px -14px #000;}
+  .trailer-frame video{display:block;width:auto;max-width:calc(100vw - 60px);
+    max-height:78vh;aspect-ratio:9/16;background:#000;image-rendering:auto;}
+  @media(max-width:640px){.trailer-frame video{width:100%;max-height:none;}}
+  .trailer-cap{position:relative;z-index:2;text-align:center;font-family:'Press Start 2P',monospace;
+    font-size:8px;color:var(--slate);margin-top:16px;line-height:1.6;}
+
+  /* ---- real screenshots (placeholder) ---- */
+  .shots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,22px);}
+  @media(max-width:820px){.shots-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.shots-grid{grid-template-columns:1fr;}}
+  .shot{margin:0;}
+  .shot .frame{border:3px solid var(--gold);background:#04030A;padding:3px;position:relative;
+    box-shadow:0 0 0 3px #04030A,0 0 0 6px #221f3e,0 14px 30px -12px #000;}
+  .shot .frame img{display:block;width:100%;height:auto;image-rendering:auto;}
+  .shot .ph{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,210,74,.08), transparent 60%),linear-gradient(180deg,#0a1030,#0c1a3a);}
+  .shot .ph span{font-family:'Press Start 2P',monospace;font-size:9px;color:#4b4a72;letter-spacing:.05em;}
+  .shot .tag{position:absolute;top:-11px;left:12px;z-index:2;font-family:'Press Start 2P',monospace;font-size:8px;
+    color:#04030A;background:var(--nature);padding:6px 9px;box-shadow:2px 2px 0 #1c6a2a;}
+  .shot figcaption{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--slate);margin-top:12px;line-height:1.6;}
+  .shot figcaption b{color:var(--gold);}
+
+  /* ---- footer (splash: no outbound nav) ---- */
+  footer{border-top:2px solid var(--line);padding:30px 0 46px;position:relative;z-index:2;}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;color:var(--slate);font-size:17px;}
+
+  .center-cta{text-align:center;margin-top:clamp(2rem,5vw,2.4rem);}
+</style>
+</head>
+<body>
+<div class="world">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-sword" viewBox="0 0 100 100" shape-rendering="crispEdges"><polygon points="50,4 58,48 50,66 42,48" fill="currentColor"/><rect x="34" y="64" width="32" height="7" fill="currentColor"/><rect x="46" y="71" width="8" height="20" fill="currentColor"/><rect x="44" y="90" width="12" height="6" fill="currentColor"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 100 100" shape-rendering="crispEdges"><path d="M50 6 L88 20 V50 C88 74 72 90 50 96 C28 90 12 74 12 50 V20 Z" fill="currentColor"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 100 100" shape-rendering="crispEdges"><polygon points="50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40" fill="currentColor"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 100 100" shape-rendering="crispEdges"><path d="M50 86 C6 54 20 14 50 34 C80 14 94 54 50 86 Z" fill="currentColor"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 13l5 5L20 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 100 100" shape-rendering="crispEdges"><rect x="18" y="42" width="64" height="46" fill="currentColor"/><rect x="14" y="30" width="72" height="16" fill="currentColor"/><rect x="45" y="30" width="10" height="58" fill="#04030A"/><path d="M50 30 C40 12 20 14 30 30 M50 30 C60 12 80 14 70 30" fill="none" stroke="currentColor" stroke-width="7"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 100 100" shape-rendering="crispEdges"><rect x="24" y="46" width="52" height="42" fill="currentColor"/><path d="M34 46 V34 a16 16 0 0 1 32 0 V46" fill="none" stroke="currentColor" stroke-width="8"/><rect x="46" y="60" width="8" height="14" fill="#04030A"/></symbol>
+  <symbol id="i-play" viewBox="0 0 100 100" shape-rendering="crispEdges"><rect x="20" y="18" width="12" height="64" fill="currentColor"/><rect x="32" y="24" width="10" height="52" fill="currentColor"/><rect x="42" y="30" width="10" height="40" fill="currentColor"/><rect x="52" y="36" width="10" height="28" fill="currentColor"/><rect x="62" y="42" width="10" height="16" fill="currentColor"/><rect x="72" y="46" width="8" height="8" fill="currentColor"/></symbol>
+  <symbol id="i-prism" viewBox="0 0 100 100" shape-rendering="crispEdges">
+    <polygon points="50,4 78,34 62,92 38,92 22,34" fill="currentColor" opacity=".55"/>
+    <polygon points="50,4 78,34 50,50" fill="#B7AEFF"/>
+    <polygon points="50,4 22,34 50,50" fill="#6E63D0"/>
+    <polygon points="22,34 50,50 38,92" fill="#8D82F0"/>
+    <polygon points="78,34 50,50 62,92" fill="#5B4FB0"/>
+    <rect x="46" y="20" width="4" height="12" fill="#FFF6E0"/>
+  </symbol>
+  <symbol id="hero-sprite" viewBox="0 0 40 46" shape-rendering="crispEdges">
+    <polygon points="8,15 20,3 32,15" fill="var(--tunic,#5AD06A)"/>
+    <rect x="10" y="13" width="20" height="4" fill="var(--tunic,#5AD06A)"/>
+    <rect x="10" y="15" width="20" height="4" fill="var(--hair,#5a3410)"/>
+    <rect x="12" y="17" width="16" height="8" fill="var(--skin,#F0C89A)"/>
+    <rect x="15" y="20" width="2" height="2" fill="#141826"/><rect x="23" y="20" width="2" height="2" fill="#141826"/>
+    <rect x="11" y="25" width="18" height="12" fill="var(--tunic,#5AD06A)"/>
+    <rect x="11" y="34" width="18" height="2" fill="var(--hair,#5a3410)"/>
+    <rect x="7" y="26" width="4" height="9" fill="var(--skin,#F0C89A)"/><rect x="29" y="26" width="4" height="9" fill="var(--skin,#F0C89A)"/>
+    <rect x="13" y="37" width="5" height="7" fill="#2a3050"/><rect x="22" y="37" width="5" height="7" fill="#2a3050"/>
+    <rect x="12" y="43" width="7" height="3" fill="#1a1e33"/><rect x="21" y="43" width="7" height="3" fill="#1a1e33"/>
+    <rect x="33" y="11" width="2" height="17" fill="var(--wpn,#FFD24A)"/><rect x="30" y="26" width="8" height="2" fill="var(--wpn,#FFD24A)"/>
+  </symbol>
+</defs></svg>
+
+<div class="stars">
+  <div class="star tw" style="top:6%;left:9%;"></div><div class="star" style="top:12%;left:24%;"></div>
+  <div class="star tw" style="top:5%;left:70%;animation-delay:1s;"></div><div class="star" style="top:15%;left:88%;"></div>
+  <div class="star tw" style="top:3%;left:50%;animation-delay:2s;"></div><div class="star" style="top:9%;left:38%;"></div>
+</div>
+
+<!-- NAV (splash: brand only, no links off the page) -->
+<nav><div class="wrap nav-in">
+  <span class="brand"><span class="k"><svg viewBox="0 0 100 100"><use href="#i-shield"/></svg></span>KidBits</span>
+  <span class="nav-flag">LAUNCHING SOON</span>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero" id="top"><div class="wrap"><div class="hero-grid">
+  <div>
+    <p class="eyebrow">A REAL, PLAYABLE KEEPSAKE</p>
+    <h1>Turn your kid into the <span class="g">hero of their own game</span></h1>
+    <ul class="vp-list">
+      <li><span class="vp-ic f"><svg viewBox="0 0 100 100"><use href="#i-heart"/></svg></span><span><b>Their face says it all.</b> They see themselves — plus friends, pets, and the people they love — in a real game.</span></li>
+      <li><span class="vp-ic a"><svg viewBox="0 0 100 100"><use href="#i-lock"/></svg></span><span><b>Kid-safe by design.</b> No passwords, no sensitive info, nothing shared. Ever.</span></li>
+      <li><span class="vp-ic n"><svg viewBox="0 0 100 100"><use href="#i-shield"/></svg></span><span><b>A keepsake they never outgrow.</b> Playable years from now — one to look back on as they grow up.</span></li>
+      <li><span class="vp-ic w"><svg viewBox="0 0 100 100"><use href="#i-play"/></svg></span><span><b>No app, no console.</b> Plays in any browser, phone or laptop. Just tap the link.</span></li>
+      <li><span class="vp-ic g"><svg viewBox="0 0 100 100"><use href="#i-gift"/></svg></span><span><b>The gift no store can sell.</b> For birthdays, holidays, and spoiling the grandkids — a gift that lasts.</span></li>
+    </ul>
+  </div>
+</div></div></header>
+
+<!-- JOIN THE LIST -->
+<section class="blk" id="join"><div class="wrap"><div class="join-band">
+  <div class="prism"><svg viewBox="0 0 100 100"><use href="#i-prism"/></svg></div>
+
+  <!-- FORM -->
+  <div id="joinForm">
+    <p class="kicker" style="margin-bottom:12px;">BE FIRST IN LINE</p>
+    <h2 style="margin-bottom:12px;">Join the mailing list</h2>
+    <p class="sub" style="margin-bottom:0;">Drop your email and we'll tell you the moment KidBits opens — plus early-bird pricing for the list.</p>
+
+    <form class="form" id="subscribeForm" novalidate>
+      <div class="field">
+        <label for="email">Your email</label>
+        <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="field">
+        <label for="firstName">First name <span style="color:var(--slate);">(optional)</span></label>
+        <input type="text" id="firstName" name="firstName" autocomplete="given-name" placeholder="What should we call you?">
+      </div>
+
+      <div class="field">
+        <label>Who are you shopping for?</label>
+        <div class="segs" role="radiogroup" aria-label="Who are you shopping for?">
+          <label class="seg"><input type="radio" name="audience" value="my_kid"><span>MY OWN KID</span></label>
+          <label class="seg"><input type="radio" name="audience" value="grandchild"><span>A GRANDCHILD</span></label>
+          <label class="seg"><input type="radio" name="audience" value="relative"><span>NIECE / NEPHEW / OTHER</span></label>
+          <label class="seg"><input type="radio" name="audience" value="curious"><span>JUST CURIOUS</span></label>
+        </div>
+      </div>
+
+      <p class="form-error" id="formError">Please enter a valid email address.</p>
+
+      <div class="join-submit">
+        <button class="btn fire" type="submit" id="submitBtn"><svg viewBox="0 0 100 100"><use href="#i-spark"/></svg>NOTIFY ME AT LAUNCH</button>
+        <span class="join-fine"><b>No spam.</b> One or two emails, then launch news. Unsubscribe anytime.</span>
+      </div>
+    </form>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="join-done" id="joinDone">
+    <div class="tick"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
+    <h3>You're on the list!</h3>
+    <p>We'll email you the moment KidBits opens — with your early-bird perk waiting. Keep an eye on your inbox.</p>
+  </div>
+
+</div></div></section>
+
+<!-- TRAILER -->
+<section class="blk"><div class="wrap">
+  <p class="kicker">SEE IT IN MOTION</p>
+  <h2>The launch trailer</h2>
+  <p class="sub">A quick look at what a KidBits adventure feels like — starring a family just like yours.</p>
+</div>
+<div class="trailer-stage">
+  <!-- ambient blurred backdrop fills the widescreen space on desktop -->
+  <div class="trailer-amb" aria-hidden="true">
+    <video src="KidBits_Launch_Trailer_v4_Vertical_9x16.mp4" autoplay muted loop playsinline></video>
+  </div>
+  <!-- the real, sharp trailer in a gold game-screen frame -->
+  <div class="trailer-frame">
+    <video src="KidBits_Launch_Trailer_v4_Vertical_9x16.mp4"
+           controls autoplay muted loop playsinline preload="metadata"
+           aria-label="KidBits launch trailer"></video>
+  </div>
+</div>
+<div class="wrap"><p class="trailer-cap">TAP FOR SOUND · PLAYS ON PHONE OR DESKTOP</p></div>
+</section>
+
+<!-- REAL SCREENSHOTS (placeholders — swap in real images later) -->
+<section class="blk"><div class="wrap">
+  <p class="kicker">STRAIGHT FROM THE GAME</p>
+  <h2>Real screenshots</h2>
+  <p class="sub">Actual moments from KidBits adventures — battles, heroes, and title screens.</p>
+  <div class="shots-grid">
+    <!-- To use a real image: replace the .ph div with <img src="shot-1.png" alt="..."> -->
+    <figure class="shot">
+      <div class="frame"><div class="ph"><span>SCREENSHOT 1</span></div></div>
+      <figcaption><b>IN BATTLE</b> · your caption here</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="frame"><div class="ph"><span>SCREENSHOT 2</span></div></div>
+      <figcaption><b>THE HERO</b> · your caption here</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="frame"><div class="ph"><span>SCREENSHOT 3</span></div></div>
+      <figcaption><b>TITLE SCREEN</b> · your caption here</figcaption>
+    </figure>
+  </div>
+  <div class="center-cta"><a class="btn fire" href="#join"><svg viewBox="0 0 100 100"><use href="#i-sword"/></svg>JOIN THE LIST</a></div>
+</div></section>
+
+<footer><div class="wrap foot-in">
+  <span class="brand" style="font-size:13px;"><span class="k" style="width:22px;height:22px;"><svg viewBox="0 0 100 100"><use href="#i-shield"/></svg></span>KidBits</span>
+  <span>A playable keepsake · Made for the people you love</span>
+</div></footer>
+
+</div>
+
+<script>
+/* ============================================================
+   MAILING-LIST SUBMIT
+   ------------------------------------------------------------
+   Set SUBMIT_ENDPOINT to your subscribe URL (e.g. a Vercel
+   serverless function at "/api/subscribe" that adds the email
+   to your list and/or fires a Resend confirmation).
+   Leave it "" to preview the success state without sending.
+   ============================================================ */
+const SUBMIT_ENDPOINT = ""; // e.g. "/api/subscribe"
+
+const form   = document.getElementById('subscribeForm');
+const errEl  = document.getElementById('formError');
+const btn    = document.getElementById('submitBtn');
+const formWrap = document.getElementById('joinForm');
+const doneWrap = document.getElementById('joinDone');
+
+const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+function showError(msg){ errEl.textContent = msg; errEl.classList.add('show'); }
+function clearError(){ errEl.classList.remove('show'); }
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearError();
+
+  const email = form.email.value.trim();
+  if (!isEmail(email)) {
+    showError('Please enter a valid email address.');
+    form.email.focus();
+    return;
+  }
+
+  const payload = {
+    email,
+    firstName: form.firstName.value.trim(),
+    audience: (form.querySelector('input[name="audience"]:checked') || {}).value || null,
+    source: 'splash'
+  };
+
+  btn.disabled = true;
+  const label = btn.querySelector('svg') ? btn.innerHTML : btn.textContent;
+  btn.textContent = 'SENDING…';
+
+  try {
+    if (SUBMIT_ENDPOINT) {
+      const res = await fetch(SUBMIT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('Request failed');
+    } else {
+      // Preview mode — no endpoint wired yet.
+      console.log('[KidBits] preview submit (no endpoint set):', payload);
+      await new Promise(r => setTimeout(r, 400));
+    }
+    formWrap.classList.remove('show');
+    formWrap.style.display = 'none';
+    doneWrap.classList.add('show');
+    doneWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = label;
+    showError('Something went wrong. Please try again.');
+  }
+});
+</script>
+</body>
+</html>
