@@ -7,7 +7,7 @@
 <meta name="description" content="A real, playable keepsake starring your child. Join the list to be first in line at launch.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#04030A; --bg2:#0B0A18; --panel:#151332; --panel2:#0d0c1f; --line:#37345e;
@@ -16,10 +16,10 @@
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;scroll-behavior:smooth;}
-  body{font-family:'VT323',monospace;background:var(--bg);color:var(--ink);overflow-x:hidden;
-    font-size:20px;line-height:1.5;-webkit-font-smoothing:none;}
+  body{font-family:'Nunito', system-ui, -apple-system, sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;
+    font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;}
   img,svg{image-rendering:pixelated;}
-  .disp{font-family:'Press Start 2P',monospace;line-height:1.55;}
+  .disp{font-family:'Silkscreen', system-ui, sans-serif;line-height:1.55;}
   a{color:inherit;text-decoration:none;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
   .world{position:relative;background:
@@ -35,7 +35,7 @@
   @keyframes tw{0%,100%{opacity:.15;}50%{opacity:.7;}}
 
   /* ---- pixel button ---- */
-  .btn{display:inline-flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:12px;
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:'Silkscreen', system-ui, sans-serif;font-size:13px;
     color:#1a1204;background:var(--gold);padding:15px 22px;min-height:50px;border:0;cursor:pointer;
     box-shadow:4px 4px 0 #7a5a10, inset 2px 2px 0 var(--gold-soft);transition:transform .08s steps(1),box-shadow .08s steps(1);}
   .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #7a5a10, inset 2px 2px 0 var(--gold-soft);}
@@ -48,9 +48,9 @@
   /* ---- nav (splash: no outbound links) ---- */
   nav{position:sticky;top:0;z-index:50;background:rgba(4,3,10,.9);border-bottom:2px solid var(--line);backdrop-filter:blur(4px);}
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;}
-  .brand{display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:15px;color:var(--gold-soft);}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Silkscreen', system-ui, sans-serif;font-size:16px;color:var(--gold-soft);}
   .brand .k{width:26px;height:26px;color:var(--gold);}
-  .nav-flag{font-family:'Press Start 2P',monospace;font-size:9px;color:#210a02;background:var(--nature);
+  .nav-flag{font-family:'Silkscreen', system-ui, sans-serif;font-size:10px;color:#210a02;background:var(--nature);
     padding:9px 12px;box-shadow:3px 3px 0 #1c6a2a;white-space:nowrap;}
 
   /* ---- hero ---- */
@@ -58,31 +58,59 @@
   .hero-grid{padding:52px 0 18px;text-align:center;}
   .hero-grid > div{max-width:720px;margin:0 auto;}
   @media(max-width:900px){.hero-grid{padding:30px 0 10px;}}
-  .eyebrow{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--gold);letter-spacing:.06em;margin:0 0 20px;}
-  h1{font-family:'Press Start 2P',monospace;font-size:clamp(1.25rem,3.3vw,2.05rem);line-height:1.55;margin:0 0 22px;color:#fff;
+  .eyebrow{font-family:'Silkscreen', system-ui, sans-serif;font-size:12px;color:var(--gold);letter-spacing:.06em;margin:0 0 20px;}
+  h1{font-family:'Silkscreen', system-ui, sans-serif;font-size:clamp(1.3rem,3.2vw,2.05rem);line-height:1.5;margin:0 0 22px;color:#fff;
     text-shadow:3px 3px 0 #000, 0 0 18px rgba(255,210,74,.15);}
   h1 .g{color:var(--gold);}
-  .lead{font-size:clamp(1.15rem,1.7vw,1.4rem);color:var(--slate);line-height:1.45;max-width:48ch;margin:0 auto 28px;}
+  .lead{font-size:clamp(1.02rem,1.4vw,1.18rem);color:var(--slate);line-height:1.45;max-width:48ch;margin:0 auto 28px;}
   .hero-cta-row{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;}
-  .hero-note{font-size:18px;color:var(--slate);}
+  .hero-note{font-size:15px;color:var(--slate);}
   .hero-note b{color:var(--nature);}
 
   /* value props as bullets (under the headline) */
   .vp-list{list-style:none;margin:28px auto 0;padding:0;max-width:780px;
     display:grid;grid-template-columns:1fr 1fr;gap:17px 30px;text-align:left;}
   @media(max-width:720px){.vp-list{grid-template-columns:1fr;max-width:500px;}}
-  .vp-list li{display:flex;gap:12px;align-items:flex-start;font-size:21px;color:var(--slate);line-height:1.4;}
-  .vp-list li b{color:var(--ink);font-size:23px;}
+  .vp-list li{display:flex;gap:13px;align-items:flex-start;font-size:16.5px;color:var(--slate);line-height:1.4;}
+  .vp-list li b{color:var(--ink);font-size:18px;font-weight:800;}
   .vp-ic{flex:0 0 26px;width:26px;height:26px;margin-top:2px;color:var(--gold);}
   .vp-ic svg{width:100%;height:100%;}
   .vp-ic.f{color:var(--fire);} .vp-ic.n{color:var(--nature);} .vp-ic.a{color:var(--arcane);}
   .vp-ic.w{color:var(--water);} .vp-ic.g{color:var(--gold);}
+  .vp-list.after-shot{margin-top:34px;}
+
+  /* hero + animated transformation stage */
+  .hero-head{max-width:760px;margin:0 auto;text-align:center;padding:52px 0 24px;}
+  @media(max-width:900px){.hero-head{padding:30px 0 18px;}}
+  .xform{margin:6px auto 0;max-width:1000px;}
+  .xform-stage{position:relative;overflow:hidden;line-height:0;border:3px solid var(--gold);background:#000;
+    box-shadow:0 0 0 3px #04030A,0 0 0 6px #221f3e,0 22px 50px -16px #000;}
+  .xform-img{display:block;width:100%;height:auto;image-rendering:auto;}
+  .xform-fx{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;image-rendering:pixelated;}
+  .xform-glow{position:absolute;top:50%;left:44%;width:30%;height:82%;transform:translate(-50%,-50%);z-index:2;pointer-events:none;
+    background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,210,74,.55), rgba(255,210,74,.10) 46%, transparent 70%);
+    mix-blend-mode:screen;animation:xglow 1.8s steps(14) infinite;}
+  @keyframes xglow{0%,100%{opacity:.45;} 50%{opacity:1;}}
+  .xform-sweep{position:absolute;top:0;bottom:0;left:42%;right:0;z-index:2;pointer-events:none;overflow:hidden;}
+  .xform-sweep::before{content:"";position:absolute;top:-25%;height:150%;left:-40%;width:38%;transform:skewX(-14deg);
+    mix-blend-mode:screen;
+    background:linear-gradient(105deg, transparent, rgba(150,220,255,.30) 42%, rgba(255,255,255,.55) 50%, rgba(150,220,255,.30) 58%, transparent);
+    animation:xsweep 3.8s ease-in-out infinite;}
+  @keyframes xsweep{0%{left:-40%;opacity:0;} 12%{opacity:1;} 55%{left:105%;opacity:1;} 60%,100%{left:105%;opacity:0;}}
+  .xform .cap{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:18px;}
+  .xform .cap .pill{font-family:'Silkscreen', system-ui, sans-serif;font-size:10px;letter-spacing:.03em;
+    color:var(--ink);border:2px solid var(--line);background:#0d0c1f;padding:9px 13px;line-height:1.4;}
+  .xform .cap .pill.b{color:#04030A;background:var(--gold);border-color:var(--gold);box-shadow:3px 3px 0 #7a5a10;}
+  .xform .cap .arrow{font-family:'Silkscreen', system-ui, sans-serif;color:var(--gold);font-size:15px;}
+  @media (prefers-reduced-motion: reduce){
+    .xform-glow{animation:none;opacity:.7;} .xform-sweep::before{animation:none;opacity:0;}
+  }
 
   /* ---- section chrome ---- */
   section.blk{position:relative;z-index:2;padding:clamp(3.2rem,7vw,5rem) 0;}
-  .kicker{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--gold);text-align:center;margin:0 0 16px;letter-spacing:.05em;}
-  h2{font-family:'Press Start 2P',monospace;font-size:clamp(1.05rem,2.6vw,1.55rem);line-height:1.5;text-align:center;margin:0 0 16px;color:#fff;text-shadow:2px 2px 0 #000;}
-  .sub{text-align:center;color:var(--slate);font-size:clamp(1.2rem,1.7vw,1.42rem);line-height:1.45;max-width:56ch;margin:0 auto clamp(2rem,5vw,2.6rem);}
+  .kicker{font-family:'Silkscreen', system-ui, sans-serif;font-size:11px;color:var(--gold);text-align:center;margin:0 0 16px;letter-spacing:.05em;}
+  h2{font-family:'Silkscreen', system-ui, sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);line-height:1.45;text-align:center;margin:0 0 16px;color:#fff;text-shadow:2px 2px 0 #000;}
+  .sub{text-align:center;color:var(--slate);font-size:clamp(1.02rem,1.4vw,1.18rem);line-height:1.45;max-width:56ch;margin:0 auto clamp(2rem,5vw,2.6rem);}
 
   /* value props bento */
   .bento{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:16px;}
@@ -95,8 +123,8 @@
   .tile .ic{width:36px;height:36px;margin-bottom:14px;color:var(--gold);}
   .tile.n .ic{color:var(--nature);} .tile.a .ic{color:var(--arcane);}
   .tile.f .ic{color:var(--fire);} .tile.w .ic{color:var(--water);}
-  .tile h3{font-family:'Press Start 2P',monospace;font-size:12px;line-height:1.5;margin:0 0 12px;color:#fff;}
-  .tile p{color:var(--slate);font-size:19px;line-height:1.4;margin:0;}
+  .tile h3{font-family:'Silkscreen', system-ui, sans-serif;font-size:13px;line-height:1.5;margin:0 0 12px;color:#fff;}
+  .tile p{color:var(--slate);font-size:15px;line-height:1.4;margin:0;}
   .tile .mini{margin-top:18px;border:2px solid var(--line);background:#04030A;padding:12px;display:flex;gap:14px;align-items:center;}
   .tile .mini .pf{width:56px;height:56px;flex:0 0 56px;border:2px solid var(--line);background:linear-gradient(180deg,#0a1030,#0c1a3a);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;}
   .tile .mini .pf svg{width:74%;}
@@ -111,8 +139,8 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   .form{max-width:520px;margin:22px auto 0;text-align:left;}
   .field{margin-bottom:16px;}
-  .field label{display:block;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--gold);margin:0 0 9px;letter-spacing:.04em;}
-  .field input[type=text],.field input[type=email]{width:100%;font-family:'VT323',monospace;font-size:21px;color:var(--ink);
+  .field label{display:block;font-family:'Silkscreen', system-ui, sans-serif;font-size:10.5px;color:var(--gold);margin:0 0 9px;letter-spacing:.04em;}
+  .field input[type=text],.field input[type=email]{width:100%;font-family:'Nunito', system-ui, -apple-system, sans-serif;font-size:16.5px;color:var(--ink);
     background:#04030A;border:2px solid var(--line);padding:12px 14px;min-height:50px;}
   .field input::placeholder{color:#5c5b82;}
   .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,210,74,.35);}
@@ -121,22 +149,22 @@
   .seg{position:relative;}
   .seg input{position:absolute;opacity:0;width:0;height:0;}
   .seg span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:48px;padding:8px 10px;
-    font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.5;color:var(--slate);
+    font-family:'Silkscreen', system-ui, sans-serif;font-size:10.5px;line-height:1.5;color:var(--slate);
     border:2px solid var(--line);background:#04030A;cursor:pointer;transition:none;}
   .seg input:checked + span{color:#04030A;background:var(--gold);box-shadow:3px 3px 0 #7a5a10;}
   .seg input:focus-visible + span{outline:3px solid var(--gold-soft);outline-offset:2px;}
   .join-submit{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:22px;}
-  .join-fine{font-size:19px;color:var(--slate);}
+  .join-fine{font-size:13.5px;color:var(--slate);}
   .join-fine b{color:var(--nature);}
-  .form-error{display:none;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--fire);line-height:1.6;margin-top:4px;}
+  .form-error{display:none;font-family:'Silkscreen', system-ui, sans-serif;font-size:10.5px;color:var(--fire);line-height:1.6;margin-top:4px;}
   .form-error.show{display:block;}
 
   /* success state */
   .join-done{display:none;text-align:center;}
   .join-done.show{display:block;}
   .join-done .tick{width:56px;height:56px;margin:0 auto 16px;color:var(--nature);}
-  .join-done h3{font-family:'Press Start 2P',monospace;font-size:14px;color:#fff;margin:0 0 12px;text-shadow:2px 2px 0 #000;}
-  .join-done p{color:var(--slate);font-size:20px;line-height:1.45;max-width:44ch;margin:0 auto;}
+  .join-done h3{font-family:'Silkscreen', system-ui, sans-serif;font-size:15px;color:#fff;margin:0 0 12px;text-shadow:2px 2px 0 #000;}
+  .join-done p{color:var(--slate);font-size:16px;line-height:1.45;max-width:44ch;margin:0 auto;}
 
   /* ---- TRAILER ---- */
   .trailer-stage{position:relative;overflow:hidden;border:2px solid var(--line);
@@ -150,8 +178,8 @@
   .trailer-frame video{display:block;width:auto;max-width:calc(100vw - 60px);
     max-height:78vh;aspect-ratio:9/16;background:#000;image-rendering:auto;}
   @media(max-width:640px){.trailer-frame video{width:100%;max-height:none;}}
-  .trailer-cap{position:relative;z-index:2;text-align:center;font-family:'Press Start 2P',monospace;
-    font-size:8px;color:var(--slate);margin-top:16px;line-height:1.6;}
+  .trailer-cap{position:relative;z-index:2;text-align:center;font-family:'Silkscreen', system-ui, sans-serif;
+    font-size:9px;color:var(--slate);margin-top:16px;line-height:1.6;}
 
   /* ---- real screenshots (placeholder) ---- */
   .shots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,22px);}
@@ -163,15 +191,15 @@
   .shot .frame img{display:block;width:100%;height:auto;image-rendering:auto;}
   .shot .ph{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;
     background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,210,74,.08), transparent 60%),linear-gradient(180deg,#0a1030,#0c1a3a);}
-  .shot .ph span{font-family:'Press Start 2P',monospace;font-size:9px;color:#4b4a72;letter-spacing:.05em;}
-  .shot .tag{position:absolute;top:-11px;left:12px;z-index:2;font-family:'Press Start 2P',monospace;font-size:8px;
+  .shot .ph span{font-family:'Silkscreen', system-ui, sans-serif;font-size:10px;color:#4b4a72;letter-spacing:.05em;}
+  .shot .tag{position:absolute;top:-11px;left:12px;z-index:2;font-family:'Silkscreen', system-ui, sans-serif;font-size:9px;
     color:#04030A;background:var(--nature);padding:6px 9px;box-shadow:2px 2px 0 #1c6a2a;}
-  .shot figcaption{font-family:'Press Start 2P',monospace;font-size:8px;color:var(--slate);margin-top:12px;line-height:1.6;}
+  .shot figcaption{font-family:'Silkscreen', system-ui, sans-serif;font-size:9px;color:var(--slate);margin-top:12px;line-height:1.6;}
   .shot figcaption b{color:var(--gold);}
 
   /* ---- footer (splash: no outbound nav) ---- */
   footer{border-top:2px solid var(--line);padding:30px 0 46px;position:relative;z-index:2;}
-  .foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;color:var(--slate);font-size:17px;}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;color:var(--slate);font-size:13.5px;}
 
   .center-cta{text-align:center;margin-top:clamp(2rem,5vw,2.4rem);}
 </style>
@@ -224,11 +252,28 @@
 </div></nav>
 
 <!-- HERO -->
-<header class="hero" id="top"><div class="wrap"><div class="hero-grid">
-  <div>
+<header class="hero" id="top"><div class="wrap">
+  <div class="hero-head">
     <p class="eyebrow">A REAL, PLAYABLE KEEPSAKE</p>
     <h1>Turn your kid into the <span class="g">hero of their own game</span></h1>
-    <ul class="vp-list">
+  </div>
+
+  <figure class="xform">
+    <div class="xform-stage">
+      <img class="xform-img" src="hero-transformation.jpg" alt="Four kids in a photo transforming into their own low-poly game characters — Nate, Lindsey, Milo and Stephen — as heroes in a forest adventure">
+      <div class="xform-glow"></div>
+      <div class="xform-sweep"></div>
+      <canvas class="xform-fx"></canvas>
+    </div>
+    <div class="cap">
+      <span class="pill">YOUR REAL KIDS</span>
+      <span class="arrow">&#9654;</span>
+      <span class="pill b">THEIR GAME HEROES</span>
+    </div>
+  </figure>
+
+  <div class="hero-head" style="padding-top:0;padding-bottom:0;">
+    <ul class="vp-list after-shot">
       <li><span class="vp-ic f"><svg viewBox="0 0 100 100"><use href="#i-heart"/></svg></span><span><b>Their face says it all.</b> They see themselves — plus friends, pets, and the people they love — in a real game.</span></li>
       <li><span class="vp-ic a"><svg viewBox="0 0 100 100"><use href="#i-lock"/></svg></span><span><b>Kid-safe by design.</b> No passwords, no sensitive info, nothing shared. Ever.</span></li>
       <li><span class="vp-ic n"><svg viewBox="0 0 100 100"><use href="#i-shield"/></svg></span><span><b>A keepsake they never outgrow.</b> Playable years from now — one to look back on as they grow up.</span></li>
@@ -236,7 +281,7 @@
       <li><span class="vp-ic g"><svg viewBox="0 0 100 100"><use href="#i-gift"/></svg></span><span><b>The gift no store can sell.</b> For birthdays, holidays, and spoiling the grandkids — a gift that lasts.</span></li>
     </ul>
   </div>
-</div></div></header>
+</div></header>
 
 <!-- JOIN THE LIST -->
 <section class="blk" id="join"><div class="wrap"><div class="join-band">
@@ -405,6 +450,86 @@ form.addEventListener('submit', async (e) => {
     showError('Something went wrong. Please try again.');
   }
 });
+</script>
+<script>
+/* ===== transformation particle FX ===== */
+(function(){
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stage = document.querySelector('.xform-stage');
+  const cv = document.querySelector('.xform-fx');
+  const img = document.querySelector('.xform-img');
+  if (!stage || !cv || reduce) return;
+  const ctx = cv.getContext('2d');
+  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const EMIT_X = 0.44;           // arrow center (fraction of width)
+  const parts = [];
+  const GOLD = ['#FFD24A','#FFE9A8','#FFF6E0','#FF9E3D'];
+
+  function size(){
+    W = stage.clientWidth; H = stage.clientHeight;
+    if (!W || !H) return;
+    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+
+  function spawnStream(){
+    // gold pixels streaming from the arrow toward the characters
+    parts.push({
+      x: W*EMIT_X + (Math.random()*10-5),
+      y: H*0.5 + (Math.random()*H*0.18 - H*0.09),
+      vx: 1.1 + Math.random()*2.2,
+      vy: (Math.random()*1.2 - 0.6),
+      life: 0, max: 40 + Math.random()*45,
+      s: 2 + Math.floor(Math.random()*3),
+      c: GOLD[Math.floor(Math.random()*GOLD.length)]
+    });
+  }
+  function spawnCharge(){
+    // sparkles rising over the character squad
+    parts.push({
+      x: W*(0.5 + Math.random()*0.46),
+      y: H*(0.9 + Math.random()*0.08),
+      vx: (Math.random()*0.6-0.3),
+      vy: -(0.5 + Math.random()*1.1),
+      life: 0, max: 45 + Math.random()*40,
+      s: 2 + Math.floor(Math.random()*2),
+      c: GOLD[Math.floor(Math.random()*GOLD.length)]
+    });
+  }
+
+  let running = false, raf = 0;
+  function frame(){
+    if (!running) return;
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i=0;i<3;i++) spawnStream();
+    if (Math.random()<0.7) spawnCharge();
+    for (let i=parts.length-1;i>=0;i--){
+      const p = parts[i];
+      p.life++; p.x += p.vx; p.y += p.vy; p.vy += 0.005;
+      const t = p.life/p.max;
+      if (t>=1){ parts.splice(i,1); continue; }
+      ctx.globalAlpha = t<0.15 ? t/0.15 : (1 - (t-0.15)/0.85);
+      ctx.fillStyle = p.c;
+      ctx.fillRect(p.x|0, p.y|0, p.s, p.s);
+    }
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+    if (parts.length > 260) parts.splice(0, parts.length-260);
+    raf = requestAnimationFrame(frame);
+  }
+  function start(){ if (running || !W) return; running = true; raf = requestAnimationFrame(frame); }
+  function stop(){ running = false; cancelAnimationFrame(raf); }
+
+  function boot(){ size(); start(); }
+  if (img.complete) boot(); else img.addEventListener('load', boot);
+  window.addEventListener('resize', () => { size(); });
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver((es)=>{ es.forEach(e=> e.isIntersecting ? start() : stop()); },{threshold:0.05})
+      .observe(stage);
+  }
+})();
 </script>
 </body>
 </html>
