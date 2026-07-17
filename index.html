@@ -50,8 +50,17 @@
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;}
   .brand{display:flex;align-items:center;gap:10px;font-family:'Silkscreen', system-ui, sans-serif;font-size:16px;color:var(--gold-soft);}
   .brand .k{width:26px;height:26px;color:var(--gold);}
+  .nav-cta{display:flex;align-items:center;gap:9px;}
   .nav-flag{font-family:'Silkscreen', system-ui, sans-serif;font-size:10px;color:#210a02;background:var(--nature);
-    padding:9px 12px;box-shadow:3px 3px 0 #1c6a2a;white-space:nowrap;}
+    padding:9px 12px;box-shadow:3px 3px 0 #1c6a2a;white-space:nowrap;cursor:pointer;
+    transition:transform .08s steps(1),box-shadow .08s steps(1);}
+  a.nav-flag:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 #1c6a2a;}
+  a.nav-flag:active{transform:translate(3px,3px);box-shadow:0 0 0 #1c6a2a;}
+  .nav-flag:focus-visible{outline:3px solid var(--gold-soft);outline-offset:2px;}
+  .nav-flag.fire{background:var(--fire);box-shadow:3px 3px 0 #7a2810;}
+  a.nav-flag.fire:hover{box-shadow:2px 2px 0 #7a2810;}
+  a.nav-flag.fire:active{box-shadow:0 0 0 #7a2810;}
+  @media(max-width:440px){.nav-flag{font-size:9px;padding:8px 10px;} .nav-cta{gap:7px;} .brand{font-size:13px;}}
 
   /* ---- hero ---- */
   .hero{position:relative;z-index:2;}
@@ -68,16 +77,16 @@
   .hero-note b{color:var(--nature);}
 
   /* value props as bullets (under the headline) */
-  .vp-list{list-style:none;margin:28px auto 0;padding:0;max-width:780px;
-    display:grid;grid-template-columns:1fr 1fr;gap:17px 30px;text-align:left;}
-  @media(max-width:720px){.vp-list{grid-template-columns:1fr;max-width:500px;}}
-  .vp-list li{display:flex;gap:13px;align-items:flex-start;font-size:16.5px;color:var(--slate);line-height:1.4;}
-  .vp-list li b{color:var(--ink);font-size:18px;font-weight:800;}
-  .vp-ic{flex:0 0 26px;width:26px;height:26px;margin-top:2px;color:var(--gold);}
-  .vp-ic svg{width:100%;height:100%;}
-  .vp-ic.f{color:var(--fire);} .vp-ic.n{color:var(--nature);} .vp-ic.a{color:var(--arcane);}
-  .vp-ic.w{color:var(--water);} .vp-ic.g{color:var(--gold);}
-  .vp-list.after-shot{margin-top:34px;}
+  /* 3-across value props (icon left, gold caps headline, 2-line body) */
+  .feats{list-style:none;margin:36px auto 0;padding:0;max-width:1000px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;text-align:left;}
+  @media(max-width:760px){.feats{grid-template-columns:1fr;max-width:440px;gap:24px;}}
+  .feats li{display:flex;gap:15px;align-items:flex-start;}
+  .feat-ic{flex:0 0 42px;width:42px;height:42px;margin-top:2px;color:var(--gold);}
+  .feat-ic svg{width:100%;height:100%;}
+  .feat-tx h3{font-family:'Silkscreen', system-ui, sans-serif;font-size:13px;line-height:1.5;
+    color:var(--gold);margin:0 0 9px;text-transform:uppercase;letter-spacing:.02em;}
+  .feat-tx p{font-size:15.5px;line-height:1.42;color:var(--slate);margin:0;}
 
   /* hero + animated transformation stage */
   .hero-head{max-width:760px;margin:0 auto;text-align:center;padding:52px 0 24px;}
@@ -116,7 +125,7 @@
   }
 
   /* ---- section chrome ---- */
-  section.blk{position:relative;z-index:2;padding:clamp(3.2rem,7vw,5rem) 0;}
+  section.blk{position:relative;z-index:2;padding:clamp(3.2rem,7vw,5rem) 0;scroll-margin-top:78px;}
   .kicker{font-family:'Silkscreen', system-ui, sans-serif;font-size:11px;color:var(--gold);text-align:center;margin:0 0 16px;letter-spacing:.05em;}
   h2{font-family:'Silkscreen', system-ui, sans-serif;font-size:clamp(1.1rem,2.5vw,1.5rem);line-height:1.45;text-align:center;margin:0 0 16px;color:#fff;text-shadow:2px 2px 0 #000;}
   .sub{text-align:center;color:var(--slate);font-size:clamp(1.02rem,1.4vw,1.18rem);line-height:1.45;max-width:56ch;margin:0 auto clamp(2rem,5vw,2.6rem);}
@@ -257,7 +266,10 @@
 <!-- NAV (splash: brand only, no links off the page) -->
 <nav><div class="wrap nav-in">
   <span class="brand"><span class="k"><svg viewBox="0 0 100 100"><use href="#i-shield"/></svg></span>KidBits</span>
-  <span class="nav-flag">LAUNCHING SOON</span>
+  <div class="nav-cta">
+    <a class="nav-flag fire" href="#trailer">TRAILER</a>
+    <a class="nav-flag" href="#join">JOIN LIST</a>
+  </div>
 </div></nav>
 
 <!-- HERO -->
@@ -284,15 +296,29 @@
     </div>
   </figure>
 
-  <div class="hero-head" style="padding-top:0;padding-bottom:0;">
-    <ul class="vp-list after-shot">
-      <li><span class="vp-ic f"><svg viewBox="0 0 100 100"><use href="#i-heart"/></svg></span><span><b>Their face says it all.</b> They see themselves — plus friends, pets, and the people they love — in a real game.</span></li>
-      <li><span class="vp-ic a"><svg viewBox="0 0 100 100"><use href="#i-lock"/></svg></span><span><b>Kid-safe by design.</b> No passwords, no sensitive info, nothing shared. Ever.</span></li>
-      <li><span class="vp-ic n"><svg viewBox="0 0 100 100"><use href="#i-shield"/></svg></span><span><b>A keepsake they never outgrow.</b> Playable years from now — one to look back on as they grow up.</span></li>
-      <li><span class="vp-ic w"><svg viewBox="0 0 100 100"><use href="#i-play"/></svg></span><span><b>No app, no console.</b> Plays in any browser, phone or laptop. Just tap the link.</span></li>
-      <li><span class="vp-ic g"><svg viewBox="0 0 100 100"><use href="#i-gift"/></svg></span><span><b>The gift no store can sell.</b> For birthdays, holidays, and spoiling the grandkids — a gift that lasts.</span></li>
-    </ul>
-  </div>
+  <ul class="feats">
+    <li>
+      <span class="feat-ic"><svg viewBox="0 0 100 100"><use href="#i-heart"/></svg></span>
+      <div class="feat-tx">
+        <h3>Their face says it all</h3>
+        <p>They see themselves, plus friends, pets, and the people they love, inside a real game.</p>
+      </div>
+    </li>
+    <li>
+      <span class="feat-ic"><svg viewBox="0 0 100 100"><use href="#i-gift"/></svg></span>
+      <div class="feat-tx">
+        <h3>A gift not found in stores</h3>
+        <p>Made for birthdays, holidays, and spoiling the grandkids. A gift that lasts.</p>
+      </div>
+    </li>
+    <li>
+      <span class="feat-ic"><svg viewBox="0 0 100 100"><use href="#i-shield"/></svg></span>
+      <div class="feat-tx">
+        <h3>A keepsake they never outgrow</h3>
+        <p>Playable years from now. One to look back on as they grow up.</p>
+      </div>
+    </li>
+  </ul>
 </div></header>
 
 <!-- JOIN THE LIST -->
@@ -345,7 +371,7 @@
 </div></div></section>
 
 <!-- TRAILER -->
-<section class="blk"><div class="wrap">
+<section class="blk" id="trailer"><div class="wrap">
   <p class="kicker">SEE IT IN MOTION</p>
   <h2>The launch trailer</h2>
   <p class="sub">A quick look at what a KidBits adventure feels like — starring a family just like yours.</p>
