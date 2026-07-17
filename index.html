@@ -102,6 +102,15 @@
     color:var(--ink);border:2px solid var(--line);background:#0d0c1f;padding:9px 13px;line-height:1.4;}
   .xform .cap .pill.b{color:#04030A;background:var(--gold);border-color:var(--gold);box-shadow:3px 3px 0 #7a5a10;}
   .xform .cap .arrow{font-family:'Silkscreen', system-ui, sans-serif;color:var(--gold);font-size:15px;}
+  @media (max-width:640px){
+    /* vertical layout: arrow points down, heroes on the bottom */
+    .xform-glow{top:54.8%;left:50%;width:64%;height:20%;}
+    .xform-sweep{top:63%;left:0;right:0;bottom:0;}
+    .xform-sweep::before{top:-45%;left:-25%;width:150%;height:42%;transform:skewY(-8deg);
+      background:linear-gradient(190deg, transparent, rgba(150,220,255,.30) 42%, rgba(255,255,255,.55) 50%, rgba(150,220,255,.30) 58%, transparent);
+      animation:xsweepV 3.8s ease-in-out infinite;}
+  }
+  @keyframes xsweepV{0%{top:-45%;opacity:0;} 12%{opacity:1;} 55%{top:105%;opacity:1;} 60%,100%{top:105%;opacity:0;}}
   @media (prefers-reduced-motion: reduce){
     .xform-glow{animation:none;opacity:.7;} .xform-sweep::before{animation:none;opacity:0;}
   }
@@ -260,7 +269,10 @@
 
   <figure class="xform">
     <div class="xform-stage">
-      <img class="xform-img" src="hero-transformation.jpg" alt="Four kids in a photo transforming into their own low-poly game characters — Nate, Lindsey, Milo and Stephen — as heroes in a forest adventure">
+      <picture>
+        <source media="(max-width:640px)" srcset="hero-mobile.jpg">
+        <img class="xform-img" src="hero-desktop.jpg" alt="Four kids in a photo transforming into their own low-poly game characters — Nate, Lindsey, Milo and Stephen — as heroes in a forest adventure">
+      </picture>
       <div class="xform-glow"></div>
       <div class="xform-sweep"></div>
       <canvas class="xform-fx"></canvas>
@@ -460,13 +472,15 @@ form.addEventListener('submit', async (e) => {
   const img = document.querySelector('.xform-img');
   if (!stage || !cv || reduce) return;
   const ctx = cv.getContext('2d');
-  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
-  const EMIT_X = 0.479;          // arrow center (fraction of width)
+  const mqV = window.matchMedia('(max-width:640px)');
+  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2), vert = false;
+  const EMIT_X = 0.479, EMIT_Y = 0.58;    // arrow: horizontal uses X, vertical emits near the arrow tip
   const parts = [];
   const GOLD = ['#FFD24A','#FFE9A8','#FFF6E0','#FF9E3D'];
+  const rc = () => GOLD[Math.floor(Math.random()*GOLD.length)];
 
   function size(){
-    W = stage.clientWidth; H = stage.clientHeight;
+    W = stage.clientWidth; H = stage.clientHeight; vert = mqV.matches;
     if (!W || !H) return;
     cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
     cv.style.width = W + 'px'; cv.style.height = H + 'px';
@@ -475,27 +489,27 @@ form.addEventListener('submit', async (e) => {
 
   function spawnStream(){
     // gold pixels streaming from the arrow toward the characters
-    parts.push({
-      x: W*EMIT_X + (Math.random()*10-5),
-      y: H*0.5 + (Math.random()*H*0.18 - H*0.09),
-      vx: 1.1 + Math.random()*2.2,
-      vy: (Math.random()*1.2 - 0.6),
-      life: 0, max: 40 + Math.random()*45,
-      s: 2 + Math.floor(Math.random()*3),
-      c: GOLD[Math.floor(Math.random()*GOLD.length)]
-    });
+    if (vert){
+      parts.push({ x: W*0.5 + (Math.random()*12-6), y: H*EMIT_Y + (Math.random()*6-3),
+        vx: (Math.random()*0.8-0.4), vy: 1.8 + Math.random()*2.6,
+        life:0, max:65+Math.random()*70, s:2+Math.floor(Math.random()*3), c:rc() });
+    } else {
+      parts.push({ x: W*EMIT_X + (Math.random()*10-5), y: H*0.5 + (Math.random()*H*0.18 - H*0.09),
+        vx: 1.1 + Math.random()*2.2, vy: (Math.random()*1.2 - 0.6),
+        life:0, max:40+Math.random()*45, s:2+Math.floor(Math.random()*3), c:rc() });
+    }
   }
   function spawnCharge(){
-    // sparkles rising over the character squad
-    parts.push({
-      x: W*(0.5 + Math.random()*0.46),
-      y: H*(0.9 + Math.random()*0.08),
-      vx: (Math.random()*0.6-0.3),
-      vy: -(0.5 + Math.random()*1.1),
-      life: 0, max: 45 + Math.random()*40,
-      s: 2 + Math.floor(Math.random()*2),
-      c: GOLD[Math.floor(Math.random()*GOLD.length)]
-    });
+    // sparkles energising the hero squad
+    if (vert){
+      parts.push({ x: W*(0.15 + Math.random()*0.70), y: H*(0.92 + Math.random()*0.06),
+        vx: (Math.random()*0.6-0.3), vy: -(0.4 + Math.random()*0.9),
+        life:0, max:45+Math.random()*40, s:2+Math.floor(Math.random()*2), c:rc() });
+    } else {
+      parts.push({ x: W*(0.5 + Math.random()*0.46), y: H*(0.9 + Math.random()*0.08),
+        vx: (Math.random()*0.6-0.3), vy: -(0.5 + Math.random()*1.1),
+        life:0, max:45+Math.random()*40, s:2+Math.floor(Math.random()*2), c:rc() });
+    }
   }
 
   let running = false, raf = 0;
@@ -524,6 +538,8 @@ form.addEventListener('submit', async (e) => {
   function boot(){ size(); start(); }
   if (img.complete) boot(); else img.addEventListener('load', boot);
   window.addEventListener('resize', () => { size(); });
+  const onSwitch = () => { parts.length = 0; size(); };
+  mqV.addEventListener ? mqV.addEventListener('change', onSwitch) : mqV.addListener(onSwitch);
   document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
   if ('IntersectionObserver' in window){
     new IntersectionObserver((es)=>{ es.forEach(e=> e.isIntersecting ? start() : stop()); },{threshold:0.05})
