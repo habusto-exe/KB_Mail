@@ -88,40 +88,30 @@
     color:var(--gold);margin:0 0 9px;text-transform:uppercase;letter-spacing:.02em;}
   .feat-tx p{font-size:15.5px;line-height:1.42;color:var(--slate);margin:0;}
 
-  /* hero + animated transformation stage */
+  /* hero + animated magic stage */
   .hero-head{max-width:760px;margin:0 auto;text-align:center;padding:52px 0 24px;}
   @media(max-width:900px){.hero-head{padding:30px 0 18px;}}
-  .xform{margin:6px auto 0;max-width:1000px;}
+  .xform{margin:4px auto 0;max-width:620px;}
   .xform-stage{position:relative;overflow:hidden;line-height:0;border:3px solid var(--gold);background:#000;
     box-shadow:0 0 0 3px #04030A,0 0 0 6px #221f3e,0 22px 50px -16px #000;}
   .xform-img{display:block;width:100%;height:auto;image-rendering:auto;}
-  .xform-fx{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;image-rendering:pixelated;}
-  .xform-glow{position:absolute;top:50%;left:48%;width:26%;height:82%;transform:translate(-50%,-50%);z-index:2;pointer-events:none;
-    background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,210,74,.55), rgba(255,210,74,.10) 46%, transparent 70%);
-    mix-blend-mode:screen;animation:xglow 1.8s steps(14) infinite;}
-  @keyframes xglow{0%,100%{opacity:.45;} 50%{opacity:1;}}
-  .xform-sweep{position:absolute;top:0;bottom:0;left:50%;right:0;z-index:2;pointer-events:none;overflow:hidden;}
-  .xform-sweep::before{content:"";position:absolute;top:-25%;height:150%;left:-40%;width:38%;transform:skewX(-14deg);
-    mix-blend-mode:screen;
-    background:linear-gradient(105deg, transparent, rgba(150,220,255,.30) 42%, rgba(255,255,255,.55) 50%, rgba(150,220,255,.30) 58%, transparent);
-    animation:xsweep 3.8s ease-in-out infinite;}
-  @keyframes xsweep{0%{left:-40%;opacity:0;} 12%{opacity:1;} 55%{left:105%;opacity:1;} 60%,100%{left:105%;opacity:0;}}
-  .xform .cap{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:18px;}
-  .xform .cap .pill{font-family:'Silkscreen', system-ui, sans-serif;font-size:10px;letter-spacing:.03em;
-    color:var(--ink);border:2px solid var(--line);background:#0d0c1f;padding:9px 13px;line-height:1.4;}
-  .xform .cap .pill.b{color:#04030A;background:var(--gold);border-color:var(--gold);box-shadow:3px 3px 0 #7a5a10;}
-  .xform .cap .arrow{font-family:'Silkscreen', system-ui, sans-serif;color:var(--gold);font-size:15px;}
-  @media (max-width:640px){
-    /* vertical layout: arrow points down, heroes on the bottom */
-    .xform-glow{top:54.8%;left:50%;width:64%;height:20%;}
-    .xform-sweep{top:63%;left:0;right:0;bottom:0;}
-    .xform-sweep::before{top:-45%;left:-25%;width:150%;height:42%;transform:skewY(-8deg);
-      background:linear-gradient(190deg, transparent, rgba(150,220,255,.30) 42%, rgba(255,255,255,.55) 50%, rgba(150,220,255,.30) 58%, transparent);
-      animation:xsweepV 3.8s ease-in-out infinite;}
-  }
-  @keyframes xsweepV{0%{top:-45%;opacity:0;} 12%{opacity:1;} 55%{top:105%;opacity:1;} 60%,100%{top:105%;opacity:0;}}
+  .xform-fx{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;}
+  /* warm pulse centred on the magic swirl */
+  .xform-glow{position:absolute;top:45.5%;left:57.6%;width:78%;height:66%;transform:translate(-50%,-50%);
+    z-index:2;pointer-events:none;mix-blend-mode:screen;
+    background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,196,74,.34), rgba(255,150,60,.10) 45%, transparent 70%);
+    animation:xglow 3.4s ease-in-out infinite;}
+  @keyframes xglow{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1);}
+                   50%{opacity:1;transform:translate(-50%,-50%) scale(1.06);}}
+  /* flame flicker over the fireball hand */
+  .xform-flame{position:absolute;top:33%;left:77%;width:26%;height:30%;transform:translate(-50%,-50%);
+    z-index:2;pointer-events:none;mix-blend-mode:screen;
+    background:radial-gradient(circle at 50% 50%, rgba(255,140,40,.42), rgba(255,90,30,.12) 45%, transparent 68%);
+    animation:xflame 1.15s ease-in-out infinite;}
+  @keyframes xflame{0%,100%{opacity:.45;transform:translate(-50%,-50%) scale(.95);}
+                    50%{opacity:.95;transform:translate(-50%,-50%) scale(1.1);}}
   @media (prefers-reduced-motion: reduce){
-    .xform-glow{animation:none;opacity:.7;} .xform-sweep::before{animation:none;opacity:0;}
+    .xform-glow,.xform-flame{animation:none;opacity:.75;}
   }
 
   /* ---- section chrome ---- */
@@ -281,18 +271,10 @@
 
   <figure class="xform">
     <div class="xform-stage">
-      <picture>
-        <source media="(max-width:640px)" srcset="hero-mobile.jpg">
-        <img class="xform-img" src="hero-desktop.jpg" alt="Four kids in a photo transforming into their own low-poly game characters — Nate, Lindsey, Milo and Stephen — as heroes in a forest adventure">
-      </picture>
+      <img class="xform-img" src="hero-tablet.jpg" alt="A child's custom game character bursting out of a tablet screen, wielding a glowing sword and a fireball, with the character creator visible behind him">
       <div class="xform-glow"></div>
-      <div class="xform-sweep"></div>
+      <div class="xform-flame"></div>
       <canvas class="xform-fx"></canvas>
-    </div>
-    <div class="cap">
-      <span class="pill">YOUR REAL KIDS</span>
-      <span class="arrow">&#9654;</span>
-      <span class="pill b">THEIR GAME HEROES</span>
     </div>
   </figure>
 
@@ -490,7 +472,7 @@ form.addEventListener('submit', async (e) => {
 });
 </script>
 <script>
-/* ===== transformation particle FX ===== */
+/* ===== magic particle FX (swirl dust, flame embers, sparkles) ===== */
 (function(){
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const stage = document.querySelector('.xform-stage');
@@ -498,77 +480,125 @@ form.addEventListener('submit', async (e) => {
   const img = document.querySelector('.xform-img');
   if (!stage || !cv || reduce) return;
   const ctx = cv.getContext('2d');
-  const mqV = window.matchMedia('(max-width:640px)');
-  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2), vert = false;
-  const EMIT_X = 0.479, EMIT_Y = 0.58;    // arrow: horizontal uses X, vertical emits near the arrow tip
-  const parts = [];
-  const GOLD = ['#FFD24A','#FFE9A8','#FFF6E0','#FF9E3D'];
-  const rc = () => GOLD[Math.floor(Math.random()*GOLD.length)];
+  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  // anchors measured from the artwork (fractions of the stage)
+  const SWIRL = {x:0.576, y:0.455, rx:0.30, ry:0.235};
+  const FLAME = {x:0.770, y:0.332};
+
+  const dust = [], embers = [], sparks = [];
+  const GOLD  = ['#FFD24A','#FFE9A8','#FFF6E0'];
+  const FIRE  = ['#FF9E3D','#FF6A3D','#FFC24A','#FFE9A8'];
+  const pick = a => a[Math.floor(Math.random()*a.length)];
 
   function size(){
-    W = stage.clientWidth; H = stage.clientHeight; vert = mqV.matches;
+    W = stage.clientWidth; H = stage.clientHeight;
     if (!W || !H) return;
-    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
-    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
+    cv.style.width = W+'px'; cv.style.height = H+'px';
     ctx.setTransform(DPR,0,0,DPR,0,0);
   }
 
-  function spawnStream(){
-    // gold pixels streaming from the arrow toward the characters
-    if (vert){
-      parts.push({ x: W*0.5 + (Math.random()*12-6), y: H*EMIT_Y + (Math.random()*6-3),
-        vx: (Math.random()*0.8-0.4), vy: 1.8 + Math.random()*2.6,
-        life:0, max:65+Math.random()*70, s:2+Math.floor(Math.random()*3), c:rc() });
-    } else {
-      parts.push({ x: W*EMIT_X + (Math.random()*10-5), y: H*0.5 + (Math.random()*H*0.18 - H*0.09),
-        vx: 1.1 + Math.random()*2.2, vy: (Math.random()*1.2 - 0.6),
-        life:0, max:40+Math.random()*45, s:2+Math.floor(Math.random()*3), c:rc() });
+  // gold dust orbiting the magic swirl
+  function seedDust(){
+    dust.length = 0;
+    for (let i=0;i<70;i++){
+      dust.push({
+        a: Math.random()*Math.PI*2,
+        sp: 0.004 + Math.random()*0.010,
+        rr: 0.55 + Math.random()*0.62,      // radius multiplier
+        tilt: (Math.random()*0.5-0.25),
+        s: 1 + Math.random()*2.2,
+        c: pick(GOLD),
+        ph: Math.random()*Math.PI*2
+      });
     }
   }
-  function spawnCharge(){
-    // sparkles energising the hero squad
-    if (vert){
-      parts.push({ x: W*(0.15 + Math.random()*0.70), y: H*(0.92 + Math.random()*0.06),
-        vx: (Math.random()*0.6-0.3), vy: -(0.4 + Math.random()*0.9),
-        life:0, max:45+Math.random()*40, s:2+Math.floor(Math.random()*2), c:rc() });
-    } else {
-      parts.push({ x: W*(0.5 + Math.random()*0.46), y: H*(0.9 + Math.random()*0.08),
-        vx: (Math.random()*0.6-0.3), vy: -(0.5 + Math.random()*1.1),
-        life:0, max:45+Math.random()*40, s:2+Math.floor(Math.random()*2), c:rc() });
-    }
+  // embers rising off the fireball
+  function spawnEmber(){
+    embers.push({
+      x: FLAME.x*W + (Math.random()*0.07-0.035)*W,
+      y: FLAME.y*H + (Math.random()*0.06-0.03)*H,
+      vx: (Math.random()*0.5-0.18),
+      vy: -(0.35 + Math.random()*0.85),
+      life:0, max: 55+Math.random()*70,
+      s: 1.5+Math.random()*2.2, c: pick(FIRE)
+    });
+  }
+  // twinkles across the glow
+  function spawnSpark(){
+    sparks.push({
+      x: (SWIRL.x + (Math.random()-0.5)*0.85)*W,
+      y: (SWIRL.y + (Math.random()-0.5)*0.80)*H,
+      life:0, max: 28+Math.random()*34,
+      s: 1.4+Math.random()*2.0, c: pick(GOLD)
+    });
   }
 
-  let running = false, raf = 0;
+  let running=false, raf=0, t=0;
   function frame(){
     if (!running) return;
+    t++;
     ctx.clearRect(0,0,W,H);
     ctx.globalCompositeOperation = 'lighter';
-    for (let i=0;i<3;i++) spawnStream();
-    if (Math.random()<0.7) spawnCharge();
-    for (let i=parts.length-1;i>=0;i--){
-      const p = parts[i];
-      p.life++; p.x += p.vx; p.y += p.vy; p.vy += 0.005;
-      const t = p.life/p.max;
-      if (t>=1){ parts.splice(i,1); continue; }
-      ctx.globalAlpha = t<0.15 ? t/0.15 : (1 - (t-0.15)/0.85);
+
+    // orbiting dust
+    for (const d of dust){
+      d.a += d.sp;
+      const rx = SWIRL.rx*W*d.rr, ry = SWIRL.ry*H*d.rr;
+      const x = SWIRL.x*W + Math.cos(d.a)*rx;
+      const y = SWIRL.y*H + Math.sin(d.a)*ry + Math.sin(d.a*2+d.tilt)*ry*0.10;
+      const tw = 0.45 + 0.55*Math.abs(Math.sin(d.a*1.6 + d.ph));
+      ctx.globalAlpha = tw*0.85;
+      ctx.fillStyle = d.c;
+      ctx.fillRect(x|0, y|0, d.s, d.s);
+    }
+
+    // embers
+    if (t%2===0) spawnEmber();
+    for (let i=embers.length-1;i>=0;i--){
+      const p=embers[i]; p.life++;
+      p.x += p.vx + Math.sin(p.life*0.09)*0.35;
+      p.y += p.vy; p.vy *= 0.996;
+      const k=p.life/p.max;
+      if (k>=1){ embers.splice(i,1); continue; }
+      ctx.globalAlpha = k<0.12 ? k/0.12 : (1-(k-0.12)/0.88);
       ctx.fillStyle = p.c;
       ctx.fillRect(p.x|0, p.y|0, p.s, p.s);
     }
-    ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
-    if (parts.length > 260) parts.splice(0, parts.length-260);
+
+    // sparkles
+    if (Math.random()<0.55) spawnSpark();
+    for (let i=sparks.length-1;i>=0;i--){
+      const p=sparks[i]; p.life++;
+      const k=p.life/p.max;
+      if (k>=1){ sparks.splice(i,1); continue; }
+      const a = Math.sin(k*Math.PI);
+      ctx.globalAlpha = a;
+      ctx.fillStyle = p.c;
+      const s=p.s, cx=p.x|0, cy=p.y|0;
+      ctx.fillRect(cx, cy, s, s);
+      ctx.globalAlpha = a*0.5;
+      ctx.fillRect(cx-s*1.6, cy, s*1.2, s*0.6);
+      ctx.fillRect(cx+s*1.2, cy, s*1.2, s*0.6);
+      ctx.fillRect(cx, cy-s*1.6, s*0.6, s*1.2);
+      ctx.fillRect(cx, cy+s*1.2, s*0.6, s*1.2);
+    }
+
+    ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
+    if (embers.length>200) embers.splice(0, embers.length-200);
+    if (sparks.length>90) sparks.splice(0, sparks.length-90);
     raf = requestAnimationFrame(frame);
   }
-  function start(){ if (running || !W) return; running = true; raf = requestAnimationFrame(frame); }
-  function stop(){ running = false; cancelAnimationFrame(raf); }
+  function start(){ if(running||!W) return; running=true; raf=requestAnimationFrame(frame); }
+  function stop(){ running=false; cancelAnimationFrame(raf); }
 
-  function boot(){ size(); start(); }
+  function boot(){ size(); seedDust(); start(); }
   if (img.complete) boot(); else img.addEventListener('load', boot);
-  window.addEventListener('resize', () => { size(); });
-  const onSwitch = () => { parts.length = 0; size(); };
-  mqV.addEventListener ? mqV.addEventListener('change', onSwitch) : mqV.addListener(onSwitch);
+  window.addEventListener('resize', size);
   document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
   if ('IntersectionObserver' in window){
-    new IntersectionObserver((es)=>{ es.forEach(e=> e.isIntersecting ? start() : stop()); },{threshold:0.05})
+    new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? start() : stop()), {threshold:0.05})
       .observe(stage);
   }
 })();
